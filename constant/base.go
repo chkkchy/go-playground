@@ -14,18 +14,20 @@ func (b basetype) GetValue() string {
 }
 
 type data struct {
-	Type    string   `json:"type"`
-	Options basetype `json:"options"`
+	Type    string     `json:"type"`
+	Options []basetype `json:"options"`
 }
 
-type dataiface interface {
+type Dataiface interface {
 	GetID() uint8
 	GetValue() string
 }
 
-func ToData(t string, di dataiface) *data {
+func ToData(t string, di []Dataiface) *data {
 	dt := new(data)
 	dt.Type = t
-	dt.Options = basetype{di.GetID(), di.GetValue()}
+	for _, v := range di {
+		dt.Options = append(dt.Options, basetype{v.GetID(), v.GetValue()})
+	}
 	return dt
 }
