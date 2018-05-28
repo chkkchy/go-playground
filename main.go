@@ -1,22 +1,19 @@
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/chkkchy/go-playground/constant"
-)
+import "github.com/chkkchy/go-playground/dbrw"
 
 func main() {
-	gender := constant.GetGender(1)
-	fmt.Println(gender.ID, gender.Value)
 
-	var list []constant.Dataiface
-	for _, v := range constant.GenderList {
-		list = append(list, v)
+	//var dbr dbrw.Iface = dbrw.Reader{}
+	//dbr.Read()
+
+	//var dbw dbrw.Iface = dbrw.Writer{}
+	//dbw.Write()
+
+	var rw dbrw.Iface = dbrw.ReaderWriter{
+		Reader: dbrw.Reader{Shared: "rrr"},
+		Writer: dbrw.Writer{Shared: "www"},
 	}
-	r := constant.ToData("gender", list)
-	b, _ := json.Marshal(r)
-	fmt.Println(string(b))
-
+	rw.Read()
+	rw.Write()
 }
